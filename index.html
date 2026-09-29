@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>syh & lyj第一次旅行！</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏔️</text></svg>">
+<link href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --dark-bg: #2a2520;
+  --light-bg: #f5f0e8;
+  --accent: #c85a3a;
+  --gold: #c9a063;
+  --text-dark: #1a1a1a;
+  --text-gray: #888;
+  --text-light: #aaa;
+  --card-bg: #ffffff;
+  --line: #e8e0d5;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  background: var(--light-bg);
+  color: var(--text-dark);
+  line-height: 1.8;
+}
+h1, h2, h3, .serif { font-family: 'Noto Serif SC', serif; }
+
+/* Nav */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 20px 24px;
+}
+.nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-links { display: flex; gap: 64px; }
+.nav-links a {
+  font-size: 15px; color: rgba(255,255,255,0.45); text-decoration: none;
+  transition: color 0.2s; letter-spacing: 4px;
+  font-family: 'Noto Serif SC', serif; font-weight: 400;
+}
+.nav-links a:hover { color: var(--gold); }
+@media (max-width: 700px) { .nav-links { gap: 28px; } }
+
+/* Back to top */
+.back-top {
+  position: fixed; bottom: 32px; right: 32px; z-index: 99;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--dark-bg); color: white;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  opacity: 0; transition: opacity 0.3s;
+  border: none; font-size: 18px;
+}
+.back-top.visible { opacity: 1; }
+.back-top:hover { background: var(--accent); }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  background: var(--dark-bg);
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 60px 24px;
+}
+.hero-bg {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: url('assets/potala.jpg') center/cover;
+  opacity: 0.25;
+}
+.hero-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, rgba(42,37,32,0.6) 0%, rgba(42,37,32,0.9) 100%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 700px; }
+.hero-en {
+  font-size: 14px; letter-spacing: 6px; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 24px; font-weight: 500;
+}
+.hero h1 {
+  font-size: clamp(40px, 7vw, 72px); font-weight: 900; color: white;
+  margin-bottom: 20px; letter-spacing: 8px; line-height: 1.2;
+}
+.hero-sub {
+  font-size: 16px; color: rgba(255,255,255,0.7); margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+.hero-names {
+  font-size: 14px; color: var(--gold); margin-bottom: 48px;
+  letter-spacing: 3px; font-weight: 400;
+}
+.hero-stats {
+  display: flex; justify-content: center; gap: 40px; margin-bottom: 60px;
+}
+.stat-num {
+  font-size: 32px; font-weight: 700; color: var(--gold);
+  font-family: 'Noto Serif SC', serif; line-height: 1;
+}
+.stat-label {
+  font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px;
+  letter-spacing: 1px;
+}
+.hero-names {
+  font-size: 14px; color: var(--gold); margin-bottom: 48px;
+  letter-spacing: 3px; font-weight: 400;
+}
+
+@media (max-width: 600px) {
+  .hero h1 { font-size: 40px !important; letter-spacing: 4px !important; }
+  .hero-sub { font-size: 13px !important; }
+  .hero-stats { gap: 24px !important; }
+  .stat-num { font-size: 24px !important; }
+  .section { padding: 60px 20px !important; }
+  .section-title { font-size: 28px !important; }
+  .overview-grid { grid-template-columns: 1fr !important; }
+  .day-num { font-size: 40px !important; }
+  .day-title { font-size: 20px !important; }
+  .day-header { flex-direction: column; align-items: flex-start !important; gap: 12px; }
+  .day-header-right { text-align: left !important; }
+  .countdown-box { padding: 20px 16px !important; }
+  .countdown-num { font-size: 28px !important; }
+  table.data-table { font-size: 12px !important; }
+  table.data-table th, table.data-table td { padding: 10px 8px !important; }
+}
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,0.4); font-size: 13px; letter-spacing: 2px;
+}
+
+/* Countdown */
+.countdown-box {
+  background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 16px; padding: 28px 32px;
+  max-width: 420px; margin: 0 auto;
+}
+.countdown-title {
+  font-size: 12px; color: rgba(255,255,255,0.6);
+  letter-spacing: 2px; margin-bottom: 20px;
+}
+.countdown-grid {
+  display: flex; justify-content: center; gap: 16px; align-items: flex-start;
+}
+.countdown-item { text-align: center; }
+.countdown-num {
+  font-size: 36px; font-weight: 700; color: white;
+  font-family: 'Noto Serif SC', serif; line-height: 1;
+}
+.countdown-label {
+  font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 6px;
+}
+.countdown-colon { font-size: 28px; color: rgba(255,255,255,0.3); padding-top: 4px; }
+
+/* Sections */
+.section { max-width: 1100px; margin: 0 auto; padding: 100px 40px; }
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-en {
+  font-size: 13px; letter-spacing: 4px; color: var(--accent);
+  text-transform: uppercase; margin-bottom: 16px; font-weight: 500;
+}
+.section-title {
+  font-size: 36px; font-weight: 900; color: var(--text-dark);
+  margin-bottom: 16px; letter-spacing: 2px;
+}
+.section-sub {
+  font-size: 15px; color: var(--text-gray);
+}
+
+/* Overview Cards */
+.overview-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+@media (max-width: 900px) {
+  .overview-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.overview-card {
+  background: var(--card-bg); padding: 28px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.overview-day {
+  font-size: 13px; color: var(--accent); font-weight: 600;
+  margin-bottom: 8px; letter-spacing: 1px;
+}
+.overview-title {
+  font-size: 18px; font-weight: 700; color: var(--text-dark);
+  margin-bottom: 8px;
+}
+.overview-desc {
+  font-size: 13px; color: var(--text-gray); line-height: 1.7;
+  margin-bottom: 16px;
+}
+.overview-tag {
+  display: inline-block; background: var(--light-bg);
+  padding: 4px 12px; border-radius: 4px;
+  font-size: 12px; color: var(--text-gray);
+}
+
+/* Day Detail */
+.day-detail { margin-bottom: 80px; }
+.day-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 32px; padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.day-header-left { display: flex; align-items: baseline; gap: 20px; }
+.day-num {
+  font-size: 56px; font-weight: 900; color: var(--accent);
+  font-family: 'Noto Serif SC', serif; line-height: 1;
+  opacity: 0.8;
+}
+.day-title {
+  font-size: 24px; font-weight: 700; color: var(--text-dark);
+}
+.day-date {
+  font-size: 14px; color: var(--text-gray); margin-top: 4px;
+}
+.day-header-right {
+  text-align: right;
+}
+.day-stat {
+  font-size: 18px; font-weight: 600; color: var(--text-dark);
+}
+.day-stat-label {
+  font-size: 12px; color: var(--text-gray); margin-top: 2px;
+}
+.day-content {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+}
+@media (max-width: 900px) {
+  .day-content { grid-template-columns: 1fr; }
+}
+.day-text p {
+  font-size: 15px; line-height: 1.9; color: var(--text-dark);
+  margin-bottom: 16px;
+}
+.timeline-item {
+  display: flex; gap: 16px; padding: 16px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.timeline-item:last-child { border-bottom: none; }
+.timeline-time {
+  flex-shrink: 0; width: 50px;
+  font-size: 13px; color: var(--accent); font-weight: 600;
+  padding-top: 2px;
+}
+.timeline-desc {
+  font-size: 14px; line-height: 1.8; color: var(--text-dark);
+}
+.timeline-desc ul {
+  padding-left: 16px; margin-top: 4px;
+  font-size: 13px; color: var(--text-gray);
+}
+.day-images { display: flex; flex-direction: column; gap: 16px; }
+.day-images img {
+  width: 100%; border-radius: 12px; object-fit: cover;
+}
+.day-images .img-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.day-images .img-row img { aspect-ratio: 4/3; }
+.day-images .img-single { aspect-ratio: 16/10; }
+
+/* Info Boxes */
+.tip-box {
+  background: #fdf6f0; border-left: 3px solid var(--accent);
+  padding: 16px 20px; border-radius: 0 8px 8px 0;
+  font-size: 13px; color: #8b4a2b; line-height: 1.8;
+  margin: 16px 0;
+}
+.info-box {
+  background: #f0ebe0; border-left: 3px solid var(--gold);
+  padding: 16px 20px; border-radius: 0 8px 8px 0;
+  font-size: 13px; color: #6b5a3a; line-height: 1.8;
+  margin: 16px 0;
+}
+
+/* Tables */
+table.data-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  background: var(--card-bg); border-radius: 12px; overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+table.data-table th {
+  background: var(--dark-bg); color: white; padding: 16px 20px;
+  font-size: 13px; font-weight: 500; text-align: left; letter-spacing: 1px;
+}
+table.data-table td {
+  padding: 14px 20px; font-size: 14px; border-bottom: 1px solid var(--line);
+}
+table.data-table tr:last-child td { border-bottom: none; }
+
+/* Lists */
+.styled-list { padding-left: 20px; font-size: 14px; line-height: 2.2; }
+.styled-list ul { padding-left: 20px; }
+
+.checklist-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0; font-size: 14px; cursor: pointer;
+  border-bottom: 1px dashed var(--line);
+}
+.checklist-item:last-child { border-bottom: none; }
+.checklist-item input { margin-top: 5px; accent-color: var(--accent); width: 16px; height: 16px; }
+
+.card {
+  background: var(--card-bg); border-radius: 12px; padding: 32px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04); margin-bottom: 20px;
+}
+
+.intro-text { font-size: 15px; line-height: 2; color: var(--text-dark); margin: 16px 0; }
+
+/* Footer */
+.footer-heart {
+  background: var(--dark-bg);
+  text-align: center; padding: 100px 24px;
+}
+.footer-heart p {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px; line-height: 2.2;
+  max-width: 600px; margin: 0 auto;
+  color: rgba(255,255,255,0.85);
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="#overview">行程总览</a>
+      <a href="#daily">每日行程</a>
+      <a href="#weather">实用信息</a>
+      <a href="#todo">Todo</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-en">LHASA · FIRST TRIP</div>
+    <h1>仲秋 · 拉萨</h1>
+    <div class="hero-sub">圣城拉萨 · 布达拉宫 · 羊卓雍措 · 纳木措</div>
+    <div class="hero-names">syh &amp; lyj</div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">6</div>
+        <div class="stat-label">天行程</div>
+      </div>
+      <div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">圣湖</div>
+      </div>
+      <div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">人同行</div>
+      </div>
+    </div>
+    <div class="countdown-box">
+      <div class="countdown-title">距离出发还有</div>
+      <div class="countdown-grid">
+        <div class="countdown-item"><div class="countdown-num" id="cd-days">--</div><div class="countdown-label">天</div></div>
+        <div class="countdown-colon">:</div>
+        <div class="countdown-item"><div class="countdown-num" id="cd-hours">--</div><div class="countdown-label">时</div></div>
+        <div class="countdown-colon">:</div>
+        <div class="countdown-item"><div class="countdown-num" id="cd-mins">--</div><div class="countdown-label">分</div></div>
+        <div class="countdown-colon">:</div>
+        <div class="countdown-item"><div class="countdown-num" id="cd-secs">--</div><div class="countdown-label">秒</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">向下滚动 ↓</div>
+</section>
+
+<!-- 开头介绍 -->
+<section class="section">
+  <div class="card" style="max-width: 800px; margin: 0 auto; text-align: center;">
+    <p style="font-size: 15px; line-height: 2.2; color: var(--text-dark);">
+      <b>第一次去旅游！</b><br><br>
+      我的想法是整体放松，感受人文并且把必去的景点逛了。行程安排不会太慢，也不会定死，会有大致的每天计划，但如果遇到不可抗力因素或者身体不舒服啥的就临时改一下行程；<br><br>
+      到了拉萨之后要行动迟缓一点，别着急，也别太激动；拉萨紫外线很强，每天都要涂防晒；
+    </p>
+  </div>
+</section>
+
+<!-- 行程总览 -->
+<section class="section" id="overview">
+  <div class="section-header">
+    <div class="section-en">Itinerary Overview</div>
+    <h2 class="section-title">行程总览</h2>
+    <div class="section-sub">拉萨进出，布宫+大昭寺+圣湖+天湖，慢慢玩不赶路</div>
+  </div>
+  <div class="overview-grid">
+    <div class="overview-card">
+      <div class="overview-day">DAY 1 · 10.2 周五</div>
+      <div class="overview-title">抵达拉萨</div>
+      <div class="overview-desc">抵达拉萨→入住休息→布达拉宫广场/药王山/八廓街外围散步</div>
+      <div class="overview-tag">抵达适应</div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-day">DAY 2 · 10.3 周六</div>
+      <div class="overview-title">博物馆+园林+情景剧</div>
+      <div class="overview-desc">西藏博物馆→罗布林卡→拍照→文成公主演出</div>
+      <div class="overview-tag">人文</div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-day">DAY 3 · 10.4 周日</div>
+      <div class="overview-title">羊卓雍措</div>
+      <div class="overview-desc">羊卓雍措一日游，翻越岗巴拉山口看圣湖</div>
+      <div class="overview-tag">圣湖</div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-day">DAY 4 · 10.5 周一</div>
+      <div class="overview-title">纳木措</div>
+      <div class="overview-desc">纳木措一日游，看天湖与念青唐古拉山</div>
+      <div class="overview-tag">天湖</div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-day">DAY 5 · 10.6 周二</div>
+      <div class="overview-title">布达拉宫+大昭寺</div>
+      <div class="overview-desc">布达拉宫→大昭寺→八廓街拍照</div>
+      <div class="overview-tag">景点</div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-day">DAY 6 · 10.7 周三</div>
+      <div class="overview-title">伴手礼+返程</div>
+      <div class="overview-desc">冲赛康市场→买伴手礼→返程</div>
+      <div class="overview-tag">返程</div>
+    </div>
+  </div>
+</section>
+
+<!-- 每日行程 -->
+<section class="section" id="daily">
+  <div class="section-header">
+    <div class="section-en">Daily Itinerary</div>
+    <h2 class="section-title">每日行程</h2>
+  </div>
+
+  <!-- Day 1 -->
+  <div class="day-detail">
+    <div class="day-header">
+      <div class="day-header-left">
+        <div class="day-num">01</div>
+        <div>
+          <div class="day-title">抵达拉萨，慢慢走！</div>
+          <div class="day-date">10月2日 周五 · 抵达日</div>
+        </div>
+      </div>
+      <div class="day-header-right">
+        <div class="day-stat">1h</div>
+        <div class="day-stat-label">车程</div>
+      </div>
+    </div>
+    <div class="day-content">
+      <div class="day-text">
+        <div class="timeline-item">
+          <div class="timeline-time">中午</div>
+          <div class="timeline-desc"><b>14:10</b>：抵达拉萨贡嘎机场，开车到住的地方（约1小时）；</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">下午</div>
+          <div class="timeline-desc">收拾休息，多喝水；</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">晚餐</div>
+          <div class="timeline-desc">陕西菜(待定)；</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">晚上</div>
+          <div class="timeline-desc">看状态，可以去布宫广场和八廓街转转，药王山观景台拍布达拉宫夜景很好看；</div>
+        </div>
+        <div class="tip-box">💡 第一天务必慢动作！高原反应多在抵达后6–12小时出现，一定要休息好。略微有点不舒服不用吸氧，加快身体适应，晚上可能反应会大一些；</div>
+      </div>
+      <div class="day-images">
+        <img src="assets/potala.jpg" alt="布达拉宫夜景" class="img-single">
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="day-detail">
+    <div class="day-header">
+      <div class="day-header-left">
+        <div class="day-num">02</div>
+        <div>
+          <div class="day-title">西藏博物馆+园林+情景剧</div>
+          <div class="day-date">10月3日 周六 · 人文日</div>
+        </div>
+      </div>
+    </div>
+    <div class="day-content">
+      <div class="day-text">
+        <div class="timeline-item">
+          <div class="timeline-time">上午</div>
+          <div class="timeline-desc">睡个懒觉，到<b>宗角禄康公园</b>拍布达拉宫水中倒影；
+            <ul><li>时间：约1-2h</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">午饭</div>
+          <div class="timeline-desc">待定(设置成可以随时填写的)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">下午</div>
+          <div class="timeline-desc">西藏博物馆，了解西藏历史文化；
+            <ul>
+              <li>开放时间：9:30 - 17:30</li>
+              <li>预约时间：可以预约7天内</li>
+              <li>价格：免费</li>
+              <li>游玩时间：约2h</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">傍晚</div>
+          <div class="timeline-desc">罗布林卡，达赖喇嘛的夏宫，藏式园林的秋天；</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">晚饭</div>
+          <div class="timeline-desc">待定</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">晚上</div>
+          <div class="timeline-desc">情景剧 - 文成公主，少量藏戏和情景剧的结合；</div>
+        </div>
+        <div class="info-box">
+          <p>藏装拍照：安排在过林卡之后或10.6日大昭寺；</p>
+          <p><b>备选：</b>色拉寺（50元），15:00 - 藏传佛教辩经，但要爬山，距离较远，且辩经不是每天都有；</p>
+        </div>
+      </div>
+      <div class="day-images">
+        <div class="img-row">
+          <img src="assets/zongjiaolukang.jpg" alt="宗角禄康公园视角">
+          <img src="assets/museum.png" alt="西藏博物馆正门">
+        </div>
+        <div class="img-row">
+          <img src="assets/debate1.png" alt="辩经">
+          <img src="assets/debate2.png" alt="接着辩经">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="day-detail">
+    <div class="day-header">
+      <div class="day-header-left">
+        <div class="day-num">03</div>
+        <div>
+          <div class="day-title">羊卓雍措 - 圣湖</div>
+          <div class="day-date">10月4日 周日 · 圣湖日</div>
+        </div>
+      </div>
+      <div class="day-header-right">
+        <div class="day-stat">6h</div>
+        <div class="day-stat-label">全天</div>
+      </div>
+    </div>
+    <div class="day-content">
+      <div class="day-text">
+        <div class="timeline-item">
+          <div class="timeline-time">全天</div>
+          <div class="timeline-desc">开车前往<b>羊卓雍措</b>，拉萨出发单程约2.5小时（往返约5小时），翻越岗巴拉山口（海拔4990米）；
+            <ul><li>预计时长：6h</li></ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">午饭</div>
+          <div class="timeline-desc">路上吃；</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">晚饭</div>
+          <div class="timeline-desc">待定</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">晚上</div>
+          <div class="timeline-desc">返回拉萨市区早点休息；</div>
+        </div>
+        <div class="info-box">
+          <p><b>随行人员：</b>两个湖需要司机，熟悉路况；</p>
+          <p><b>物品准备：</b>晕车药、便携氧气瓶；</p>
+        </div>
+      </div>
+      <div class="day-images">
+        <img src="assets/yamdrook.jpg" alt="羊卓雍措" class="img-single">
+        <img src="assets/yamdrook-map.jpg" alt="羊湖路线图">
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 4 -->
+  <div class="day-detail">
+    <div class="day-header">
+      <div class="day-header-left">
+        <div class="day-num">04</div>
+        <div>
+          <div class="day-title">纳木措 - 天湖</div>
+          <div class="day-date">10月5日 周一 · 天湖日</div>
+        </div>
+      </div>
+      <div class="day-header-right">
+        <div class="day-stat">全天</div>
+        <div class="day-stat-label">往返500km</div>
+      </div>
+    </div>
+    <div class="day-content">
+      <div class="day-text">
+        <div class="timeline-item">
+          <div class="timeline-time">全天</div>
+          <div class="timeline-desc">开车前往纳木措；
+            <ul>
+              <li>预约门票：至少提前1天；</li>
+              <li>价格：约120/人</li>
+              <li>路程：开车约4-5h/单程，游玩时间需全天；</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">看点</div>
+          <div class="timeline-desc">那根拉山口（海拔5190米）远眺，扎西半岛湖边漫步，看湖水与雪山相映；</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">注意</div>
+          <div class="timeline-desc">纳木措海拔4718米，风大温度低，穿冲锋衣和羽绒服；湖边停留不宜过久，当天往返；</div>
+        </div>
+        <div class="info-box">
+          <p><b>随行人员：</b>两个湖需要司机，熟悉路况；</p>
+          <p><b>物品准备：</b>晕车药、便携氧气瓶；围巾(可选)、手套(可选)、帽子(可选)</p>
+          <p><b>备选方案：</b>若身体不适或天气不佳，可改为市区转转</p>
+        </div>
+      </div>
+      <div class="day-images">
+        <img src="assets/namtso.jpg" alt="纳木措" class="img-single">
+        <img src="assets/namtso-map.jpg" alt="纳木措路线图">
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 5 -->
+  <div class="day-detail">
+    <div class="day-header">
+      <div class="day-header-left">
+        <div class="day-num">05</div>
+        <div>
+          <div class="day-title">布达拉宫 + 大昭寺</div>
+          <div class="day-date">10月6日 周二 · 核心景点日</div>
+        </div>
+      </div>
+    </div>
+    <div class="day-content">
+      <div class="day-text">
+        <div class="timeline-item">
+          <div class="timeline-time">上午</div>
+          <div class="timeline-desc">按预约时间参观<b>布达拉宫</b>
+            <ul>
+              <li>提前10天预约；</li>
+              <li>价格：100/人；</li>
+              <li>大致时长：4h；</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">中午</div>
+          <div class="timeline-desc">布达拉宫广场拍照，白天版的；这个行程也可以留到下午，我们在八廓街租藏装然后在八廓街拍完来布宫广场拍；</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">午饭</div>
+          <div class="timeline-desc">藏餐 - 玛吉阿米；</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">下午</div>
+          <div class="timeline-desc">参观<b>大昭寺</b>（85元，提前1天预约），看释迦牟尼12岁等身像；随后逛<b>八廓街</b>转经道；</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">晚饭</div>
+          <div class="timeline-desc">待定 - 牦牛肉火锅；</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">晚上</div>
+          <div class="timeline-desc">逛逛小店或者商场，提前买些饰品或者伴手礼；</div>
+        </div>
+      </div>
+      <div class="day-images">
+        <img src="assets/potala.jpg" alt="布达拉宫" class="img-single">
+        <img src="assets/jokhang.jpg" alt="大昭寺金顶">
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 6 -->
+  <div class="day-detail">
+    <div class="day-header">
+      <div class="day-header-left">
+        <div class="day-num">06</div>
+        <div>
+          <div class="day-title">伴手礼+返程</div>
+          <div class="day-date">10月7日 周三 · 返程日</div>
+        </div>
+      </div>
+    </div>
+    <div class="day-content">
+      <div class="day-text">
+        <div class="timeline-item">
+          <div class="timeline-time">上午</div>
+          <div class="timeline-desc">待定-<b>冲赛康市场</b>体验本地生活；</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">中午</div>
+          <div class="timeline-desc">购买伴手礼—奇圣厂家—牦牛肉干、藏红花、酥油茶、唐卡小挂件；</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">下午</div>
+          <div class="timeline-desc">14:00左右前往拉萨贡嘎机场</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 气候与衣物 -->
+<section class="section" id="weather">
+  <div class="section-header">
+    <div class="section-en">Weather & Packing</div>
+    <h2 class="section-title">气候与衣物准备</h2>
+    <div class="section-sub">10月拉萨昼夜温差10-15℃，多层穿衣法</div>
+  </div>
+  <p class="intro-text">10月拉萨昼夜温差比较大，大约在 10–15℃ 左右，白天基本上长袖，晚上出门要穿冲锋衣或者羽绒服。</p>
+  <table class="data-table">
+    <thead><tr><th>时段</th><th>气温</th><th>穿着建议</th></tr></thead>
+    <tbody>
+      <tr><td>白天（9–18点）</td><td>16–22℃，阳光强烈</td><td>长袖T恤/薄卫衣 + 冲锋衣外壳</td></tr>
+      <tr><td>早晚（18点–次日9点）</td><td>5–10℃，偏冷</td><td>加抓绒内胆/薄羽绒服</td></tr>
+      <tr><td>羊湖/纳木措/文成公主</td><td>0–8℃，山口更冷</td><td>厚羽绒服 + 围巾 + 手套 + 帽子</td></tr>
+    </tbody>
+  </table>
+  <p class="intro-text"><b>穿衣原则：</b>
+    <ul style="padding-left: 20px; margin-top: 8px; font-size: 14px; line-height: 2;">
+      <li>主要是两天的湖边需要注意，多层穿衣法——内层速干、中层保暖、外层防风，热脱冷穿；</li>
+      <li>市区内注意防晒即可</li>
+    </ul>
+  </p>
+</section>
+
+<!-- 行前准备 -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-en">Pre-trip Prep</div>
+    <h2 class="section-title">行前准备</h2>
+  </div>
+  <div class="card">
+    <ol class="styled-list">
+      <li><b>证件：</b>身份证（必带，多处查验）、学生证（部分景点半价）；</li>
+      <li><b>门票预约：</b>
+        <p style="margin: 4px 0;">✅ 西藏博物馆：免费，提前7天预约；</p>
+        <p style="margin: 4px 0;">✅ 布达拉宫：10.6日已预约1号线；</p>
+        <label class="checklist-item" style="border-bottom: none; padding: 4px 0;"><input type="checkbox">大昭寺：提前1天预约，85元；</label>
+        <label class="checklist-item" style="border-bottom: none; padding: 4px 0;"><input type="checkbox">纳木措：提前1天预约，约120元；</label>
+      </li>
+      <li><b>交通：</b>市内自驾，两个湖需带司机；</li>
+    </ol>
+    <p style="margin: 12px 0; padding-left: 20px;">✅ 与司机沟通，定好时间</p>
+    <ol class="styled-list">
+      <li><b>进藏前一周：</b>避免剧烈运动和感冒，保证睡眠；</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 高反 -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-en">Altitude Sickness</div>
+    <h2 class="section-title">高原缺氧应对</h2>
+  </div>
+  <div class="info-box">
+    高原反应是身体对低氧环境的正常适应过程，大部分人1–3天可缓解
+  </div>
+  <div class="card">
+    <p class="intro-text" style="margin-top:0;"><b>日常预防要点：</b></p>
+    <ul class="styled-list" style="margin-top:8px;">
+      <li>抵达前两天不洗澡、不洗头，避免受凉加重高反，多喝水；</li>
+      <li>吃饭七分饱，饮食清淡，多吃碳水；</li>
+      <li>慢慢走，别激动，不舒服的时候适量吸氧即可；</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 物品清单 -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-en">Packing List</div>
+    <h2 class="section-title">物品清单</h2>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>类别</th><th>物品</th></tr></thead>
+    <tbody>
+      <tr><td>证件财物</td><td>身份证、学生证、银行卡、少量现金（部分地方信号差）</td></tr>
+      <tr><td>衣物</td><td>三合一冲锋衣、薄羽绒服、速干内衣×2、抓绒衣、长裤×2、保暖帽、围巾、手套、舒适徒步鞋、拖鞋</td></tr>
+      <tr><td>防晒护肤</td><td>防晒霜SPF50+、润唇膏、墨镜、遮阳帽、保湿面霜（高原极干燥）</td></tr>
+      <tr><td>药品</td><td>布洛芬、葡萄糖口服液、便携氧气瓶×2、肠胃药、感冒药、创可贴</td></tr>
+      <tr><td>电子设备</td><td>手机、充电宝（低温耗电快）、相机、充电器、耳机</td></tr>
+      <tr><td>其他</td><td>保温杯、雨伞/雨衣、湿巾、纸巾、零食干粮、双肩小包</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 注意事项 -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-en">Notes & Risks</div>
+    <h2 class="section-title">注意事项</h2>
+  </div>
+  <div class="card">
+    <ol class="styled-list">
+      <li><b>尊重信仰：</b>进入寺庙脱帽、不拍照（殿内）、不摸佛像；转经按顺时针方向；不要用手指指佛像；</li>
+      <li><b>防晒第一：</b>高原紫外线极强，即使阴天也要涂防晒、戴墨镜，否则容易晒伤和雪盲；</li>
+      <li><b>保暖防感冒：</b>高原感冒可能引发肺水肿，宁可多穿不要少穿，出汗后及时擦干；</li>
+      <li><b>谨慎购物：</b>假的很多，小东西没事儿，贵重的到时候去正规的店买；</li>
+      <li><b>化妆品/密封瓶子打开的时候小心：</b>高原气压低，瓶装护肤品/粉底液可能喷涌，开盖时小心，可用保鲜膜封口；</li>
+    </ol>
+  </div>
+
+  <h3 style="font-size: 20px; margin: 40px 0 20px;">可能遇到的风险</h3>
+  <table class="data-table">
+    <thead><tr><th>可能风险</th><th>解决方式</th></tr></thead>
+    <tbody>
+      <tr><td>纳木措/羊湖遇大雪封路</td><td>提前看天气预报，备选方案改市区景点，别硬走</td></tr>
+      <tr><td>钱包/身份证丢失</td><td>身份证拍照存手机云端，丢了找酒店开证明，去派出所补办临时证件</td></tr>
+      <tr><td>盘山路晕车</td><td>提前半小时吃晕车药，坐前排，备垃圾袋和热水</td></tr>
+      <tr><td>手机没信号/迷路</td><td>提前下载离线地图，记好酒店电话，结伴行动别单独走远</td></tr>
+      <tr><td>天气突变（下雨、降温、刮风）</td><td>带冲锋衣/雨衣，关注天气预报，适时调整行程，遇恶劣天气改市区</td></tr>
+      <tr><td>高反不舒服（头痛、气短、睡不好）</td><td>多休息、喝热水、少量吸氧，一般1-2天就适应了，持续不缓解再去医院</td></tr>
+      <tr><td>感冒</td><td>及时吃药、多喝水、注意保暖，别让感冒加重，严重了及时就医</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Todo -->
+<section class="section" id="todo">
+  <div class="section-header">
+    <div class="section-en">Todo List</div>
+    <h2 class="section-title">Todo 清单</h2>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0; color: var(--accent);">行前准备</h3>
+    <label class="checklist-item"><input type="checkbox">9月22日起预约布达拉宫门票（提前10天，抢10月3日的）</label>
+    <label class="checklist-item"><input type="checkbox">预约西藏博物馆（提前7天，免费）</label>
+    <label class="checklist-item"><input type="checkbox">预约大昭寺门票（提前1天）</label>
+    <label class="checklist-item"><input type="checkbox">预约纳木措门票（提前1天）</label>
+    <label class="checklist-item"><input type="checkbox">联系司机（羊湖+纳木措两天，谈好价格路线）</label>
+    <label class="checklist-item"><input type="checkbox">对照物品清单准备</label>
+    <label class="checklist-item"><input type="checkbox">确认房间（南岸天都）</label>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0; color: #7a9e7e;">出发前一天（10月1日）</h3>
+    <label class="checklist-item"><input type="checkbox">身份证、学生证放包里</label>
+    <label class="checklist-item"><input type="checkbox">充电宝、相机充满电</label>
+    <label class="checklist-item"><input type="checkbox">最后检查一下行李</label>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0; color: #8b6914;">到拉萨后准备</h3>
+    <label class="checklist-item"><input type="checkbox">入住后先休息，不洗澡不洗头</label>
+    <label class="checklist-item"><input type="checkbox">超市买葡萄糖、零食、矿泉水</label>
+    <label class="checklist-item"><input type="checkbox">便携氧气瓶</label>
+    <label class="checklist-item"><input type="checkbox">(可能)跟司机确认羊湖、纳木措出发时间</label>
+    <label class="checklist-item"><input type="checkbox">确认第二天布达拉宫预约时间和入口</label>
+    <label class="checklist-item"><input type="checkbox">八廓街踩个点，顺便喝杯甜茶</label>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer-heart">
+  <p>❤️ 第一次旅行有点紧张的，宝贝。不知道做的太多还是太少，不知道会遇到什么困难，不知道会不会吵架。哈哈哈哈哈，但我很期待的，不管怎么样最起码都会是我们的回忆之一。是我们的第一次旅行，我也算是牵着你的手回了趟家。</p>
+</footer>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+var target = new Date('2026-10-02T07:00:00+08:00').getTime();
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
+function tick() {
+  var now = new Date().getTime();
+  var diff = target - now;
+  if (diff < 0) diff = 0;
+  document.getElementById('cd-days').textContent = pad(Math.floor(diff / 86400000));
+  document.getElementById('cd-hours').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+  document.getElementById('cd-mins').textContent = pad(Math.floor((diff % 3600000) / 60000));
+  document.getElementById('cd-secs').textContent = pad(Math.floor((diff % 60000) / 1000));
+}
+tick();
+setInterval(tick, 1000);
+
+// Back to top button
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('backTop');
+  if (window.scrollY > 500) {
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
+});
+</script>
+</body>
+</html>
